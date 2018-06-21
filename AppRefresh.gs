@@ -1,6 +1,7 @@
 function onupload() {
   
-  var folderid = 'FOLDER_ID'; 
+  var folderid = PropertiesService.getScriptProperties().getProperty('folderId');
+  var prefixNom = PropertiesService.getScriptProperties().getProperty('prefixNom');
   var folder = DriveApp.getFolderById(folderid);
   var files = folder.getFiles();
   var name = new String;
@@ -12,7 +13,7 @@ function onupload() {
     var file = files.next();
     name = file.getName();
     console.log(name);
-    if(name.indexOf("WallPaper ")>-1){
+    if(name.indexOf(prefixNom)>-1){
       continue;
     } else {
       if(missingno.length == 0){
@@ -29,12 +30,12 @@ function onupload() {
         } else {
         }
         trunk = name.split('.');
-        file.setName("WallPaper " + number + "." + trunk[1]);
+        file.setName(prefixNom + number + "." + trunk[1]);
       } else {
         number = missingno[0];
         missingno.pop();
         trunk = name.split('.');
-        file.setName("WallPaper " + number + "." + trunk[1]);
+        file.setName(prefixNom + number + "." + trunk[1]);
       }
     }
   }
@@ -43,7 +44,8 @@ function onupload() {
 
 function detectFile(){
   
-  var folderid = 'FOLDER_ID'; 
+  var folderid = PropertiesService.getScriptProperties().getProperty('folderId');
+  var prefixNom = PropertiesService.getScriptProperties().getProperty('prefixNom');
   var folder = DriveApp.getFolderById(folderid);
   var files = folder.getFiles();
   var name = new String;
@@ -56,7 +58,7 @@ function detectFile(){
     
     var file = files.next();
     name = file.getName();
-    if(name.indexOf("WallPaper ")>-1){
+    if(name.indexOf(prefixNom)>-1){
       name = name.split(" ");
       name = name[1].split(".");
       Logger.log(name[0]);
@@ -93,7 +95,8 @@ function detectFile(){
 
 function countfile(){
   
-  var folderid = 'FOLDER_ID'; 
+  var folderid = PropertiesService.getScriptProperties().getProperty('folderId');
+  var prefixNom = PropertiesService.getScriptProperties().getProperty('prefixNom');
   var folder = DriveApp.getFolderById(folderid);
   var files = folder.getFiles();
   var name = new String;
@@ -103,7 +106,7 @@ function countfile(){
     
     var file = files.next();
     name = file.getName();
-    if(name.indexOf("WallPaper ")>-1){
+    if(name.indexOf(prefixNom)>-1){
       count += 1;
     }
   }
